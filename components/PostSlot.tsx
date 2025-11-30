@@ -13,18 +13,21 @@ const Post = ({ post }: { post: PostType }) => {
             </h2>
           </Link>
           <p className="text-sm">
-            Written by: {post.author} • Published: {post.date}
+            Written by: {post.author || "Unknown"} • Published: {post.date}
           </p>
         </div>
         <p className="line-clamp-6">{post.content}</p>
       </div>
       <Link
-        href=""
+        href={`/post/${post.id}`}
         className="relative flex-1/4 aspect-square group overflow-hidden"
       >
         <Image
-          src={post.image}
-          alt={post.image}
+          src={
+            post.image ||
+            "https://www.rockstargames.com/img/global/downloads/wallpapers/rockstar/BLACKRSTARLOGO_3840x2160.jpg"
+          }
+          alt={post.title}
           fill
           className="object-cover group-hover:scale-105 duration-100"
         />

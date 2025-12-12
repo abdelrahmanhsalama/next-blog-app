@@ -15,7 +15,7 @@ const BlogPosts = async () => {
       </main>
     );
   } catch (error) {
-    return <p>:( Couldn't load posts, please try again later</p>;
+    return <p>😕 Couldn't load posts, please try again later</p>;
   }
 };
 

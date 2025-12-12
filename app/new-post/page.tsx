@@ -1,6 +1,7 @@
 "use client";
 
 import { useState } from "react";
+import Editor from "./components/Editor";
 
 export default function NewPost() {
   const [success, setSuccess] = useState("");
@@ -19,10 +20,10 @@ export default function NewPost() {
   ];
 
   return (
-    <main className="space-y-4">
+    <main className="space-y-4 w-full">
       <h2 className="text-xl">New Post</h2>
       <form
-        className="space-y-4 *:block"
+        className="space-y-2"
         action="http://localhost:8000/api/posts"
         method="POST"
         onSubmit={async (e) => {
@@ -30,7 +31,7 @@ export default function NewPost() {
           const formData = new FormData(e.currentTarget);
           const formDataObj = Object.fromEntries(formData.entries());
           if (!formDataObj.title || !formDataObj.content) {
-            setError(":( Missing title or content");
+            setError("😕 Missing title or content");
             setSuccess("");
             return;
           }
@@ -43,14 +44,14 @@ export default function NewPost() {
             const responseData = await response.json();
             console.log("Response data:", responseData);
             if (response.ok) {
-              setSuccess(":) Post submitted successfully");
+              setSuccess("😁 Post submitted successfully");
               setError("");
             }
           } catch (error: unknown) {
             const errorMessage =
               error instanceof Error && error.message == "Failed to fetch"
-                ? ":( Server didn't respond, try again later"
-                : `:( Something went wrong - ${
+                ? "😕 Server didn't respond, try again later"
+                : `😕 Something went wrong - ${
                     error instanceof Error ? error.message : "Unknown error"
                   }`;
             setError(errorMessage);
@@ -58,41 +59,36 @@ export default function NewPost() {
           }
         }}
       >
-        {formFields.map((formField) => (
-          <label className="space-y-1" key={formField.name}>
-            <div>
-              {formField.label}{" "}
-              {formField.mandatory && <span className="text-red-600">*</span>}
-            </div>
-            {formField.type === "input" ? (
-              <input
-                className="border border-foreground rounded w-full p-2"
-                name={formField.name}
-              ></input>
-            ) : (
-              <textarea
-                className="border border-foreground rounded w-full p-2"
-                rows={10}
-                name={formField.name}
-              ></textarea>
-            )}
-          </label>
-        ))}
-        <p className="h-6">
-          <span
-            className={`text-red-500 ${
-              error ? "opacity-100" : "opacity-0"
-            } duration-100`}
-          >
-            {error}
-          </span>
-          <span
-            className={`text-green-500 ${
-              success ? "opacity-100" : "opacity-0"
-            } duration-100`}
-          >
-            {success}
-          </span>
+        <div id="form" className="space-y-4 *:block">
+          {formFields.map((formField) => (
+            <label className="space-y-1" key={formField.name}>
+              <div>
+                {formField.label}{" "}
+                {formField.mandatory && <span className="text-red-600">*</span>}
+              </div>
+              {formField.type === "input" ? (
+                <input
+                  className="border border-foreground rounded w-full p-2"
+                  name={formField.name}
+                ></input>
+              ) : (
+                <textarea
+                  className="border border-foreground rounded w-full p-2"
+                  rows={10}
+                  name={formField.name}
+                ></textarea>
+              )}
+            </label>
+          ))}
+        </div>
+        <Editor />
+        <p
+          className={`duration-500 ${
+            error || success ? "max-h-100 opacity-100" : "max-h-0 opacity-0"
+          }`}
+        >
+          <span className={"text-red-500"}>{error}</span>
+          <span className={"text-green-500"}>{success}</span>
         </p>
         <button
           type="submit"

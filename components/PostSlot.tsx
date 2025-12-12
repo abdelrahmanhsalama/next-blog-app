@@ -20,7 +20,7 @@ const Post = ({ post }: { post: PostType }) => {
         <p className="line-clamp-6">{post.content}</p>
       </div>
       <Link
-        href={`/post/${post.id}`}
+        href={`/post/${post.uuid}`}
         className="relative flex-1/4 aspect-square group overflow-hidden"
       >
         <Image

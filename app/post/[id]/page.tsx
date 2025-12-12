@@ -1,5 +1,38 @@
-import { posts } from "@/libs/posts";
 import Image from "next/image";
+import Link from "next/link";
+import type { Metadata, ResolvingMetadata } from "next";
+
+type Props = {
+  params: Promise<{ id: string }>;
+  searchParams: Promise<{ [key: string]: string | string[] | undefined }>;
+};
+
+async function getPost(postId: string) {
+  const response = await fetch(`http://localhost:8000/api/posts/${postId}`);
+  if (!response.ok) {
+    throw new Error("Post not found");
+  }
+  const post = await response.json();
+  return post;
+}
+
+export async function generateMetadata(
+  { params }: Props,
+  parent: ResolvingMetadata
+): Promise<Metadata> {
+  const { id } = await params;
+
+  try {
+    const post = await getPost(id);
+    return {
+      title: post.title,
+    };
+  } catch (error) {
+    return {
+      title: "Post Not Found",
+    };
+  }
+}
 
 export default async function Post({
   params,
@@ -9,18 +42,15 @@ export default async function Post({
   const { id } = await params;
 
   try {
-    const response = await fetch(`http://localhost:8000/api/posts/${id}`);
-    if (!response.ok) {
-      throw new Error("Post not found");
-    }
-    const post = await response.json();
+    const post = await getPost(id);
 
     return (
-      <article className="space-y-4 border">
+      <article className="space-y-4">
         <div className="space-y-2">
           <h2 className="text-2xl">{post.title}</h2>
           <p className="text-sm">
-            Written by: {post.author || "Unknown"} • Published: {post.date}
+            Written by: {post.author || "Unknown"} • Published:{" "}
+            {post.date.split("T")[0]}
           </p>
         </div>
         <Image
@@ -48,6 +78,22 @@ export default async function Post({
       </article>
     );
   } catch (error) {
-    return <p>:( Post not found</p>;
+    return (
+      <div className="flex flex-col items-center justify-center text-center flex-1 space-y-4">
+        <p className="text-[2rem]">😕</p>
+        <div className="space-y-2">
+          <h2 className="text-2xl font-semibold">Post Not Found</h2>
+          <p className="text-gray-500 dark:text-white">
+            The post you're looking for doesn't exist or has been removed.
+          </p>
+        </div>
+        <Link
+          href="/"
+          className="px-4 py-2 bg-blue-600 text-white rounded hover:bg-blue-600/95 transition-colors"
+        >
+          Back to Home
+        </Link>
+      </div>
+    );
   }
 }

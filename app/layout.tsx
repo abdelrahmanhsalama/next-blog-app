@@ -11,7 +11,10 @@ const geistSans = Geist({
 });
 
 export const metadata: Metadata = {
-  title: "next-blog-app",
+  title: {
+    template: "%s | Blog-App",
+    default: "Blog-App",
+  },
 };
 
 export default function RootLayout({
@@ -27,7 +30,7 @@ export default function RootLayout({
         <ThemeProvider attribute="class">
           <div className="min-h-screen flex flex-col">
             <NavBar />
-            <div className="flex-1">{children}</div>
+            <div className="flex-1 flex">{children}</div>
             <Footer />
           </div>
         </ThemeProvider>

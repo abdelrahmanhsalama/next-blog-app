@@ -7,13 +7,14 @@ const Post = ({ post }: { post: PostType }) => {
     <article className="flex gap-8 border border-foreground/10 rounded-lg shadow-lg p-4">
       <div className="flex-3/4 space-y-2">
         <div className="space-y-1">
-          <Link href={`/post/${post.id}`}>
+          <Link href={`/post/${post.uuid}`}>
             <h2 className="text-xl font-medium cursor-pointer inline">
               {post.title}
             </h2>
           </Link>
           <p className="text-sm">
-            Written by: {post.author || "Unknown"} • Published: {post.date}
+            Written by: {post.author || "Unknown"} • Published:{" "}
+            {post.date.split("T")[0]}
           </p>
         </div>
         <p className="line-clamp-6">{post.content}</p>

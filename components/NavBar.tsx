@@ -1,5 +1,4 @@
 import Link from "next/link";
-import { ThemeToggle } from "./ThemeToggle";
 
 const NavBar = () => {
   return (
@@ -19,12 +18,11 @@ const NavBar = () => {
         <Link href="/new-post">
           <button
             type="button"
-            className="text-foreground bg-background border border-foreground px-2 py-1 rounded hover:text-background hover:bg-foreground duration-200 cursor-pointer"
+            className="px-4 py-2 border border-blue-600 text-blue-600 rounded hover:bg-blue-600 hover:text-white cursor-pointer duration-200"
           >
             New Post
           </button>
         </Link>
-        <ThemeToggle />
       </div>
     </nav>
   );

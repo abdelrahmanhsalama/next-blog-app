@@ -19,10 +19,10 @@ export default function NewPost() {
   ];
 
   return (
-    <main className="space-y-4">
+    <main className="space-y-4 w-full">
       <h2 className="text-xl">New Post</h2>
       <form
-        className="space-y-4 *:block"
+        className="space-y-2 *:block"
         action="http://localhost:8000/api/posts"
         method="POST"
         onSubmit={async (e) => {
@@ -30,7 +30,7 @@ export default function NewPost() {
           const formData = new FormData(e.currentTarget);
           const formDataObj = Object.fromEntries(formData.entries());
           if (!formDataObj.title || !formDataObj.content) {
-            setError(":( Missing title or content");
+            setError("😕 Missing title or content");
             setSuccess("");
             return;
           }
@@ -49,8 +49,8 @@ export default function NewPost() {
           } catch (error: unknown) {
             const errorMessage =
               error instanceof Error && error.message == "Failed to fetch"
-                ? ":( Server didn't respond, try again later"
-                : `:( Something went wrong - ${
+                ? "😕 Server didn't respond, try again later"
+                : `😕 Something went wrong - ${
                     error instanceof Error ? error.message : "Unknown error"
                   }`;
             setError(errorMessage);
@@ -66,37 +66,31 @@ export default function NewPost() {
             </div>
             {formField.type === "input" ? (
               <input
-                className="border border-foreground rounded w-full p-2"
+                className="border border-gray-600 outline-0 rounded w-full p-2"
                 name={formField.name}
               ></input>
             ) : (
               <textarea
-                className="border border-foreground rounded w-full p-2"
+                className="border border-gray-600 outline-0 rounded w-full p-2"
                 rows={10}
                 name={formField.name}
               ></textarea>
             )}
           </label>
         ))}
-        <p className="h-6">
-          <span
-            className={`text-red-500 ${
-              error ? "opacity-100" : "opacity-0"
-            } duration-100`}
-          >
-            {error}
-          </span>
-          <span
-            className={`text-green-500 ${
-              success ? "opacity-100" : "opacity-0"
-            } duration-100`}
-          >
-            {success}
-          </span>
-        </p>
+        <div
+          className={`overflow-hidden transition-all duration-300 ease-in-out ${
+            error || success ? "h-8" : "h-0"
+          }`}
+        >
+          <div className="pb-1">
+            {error && <p className="text-red-500">{error}</p>}
+            {success && <p className="text-green-500">{success}</p>}
+          </div>
+        </div>
         <button
           type="submit"
-          className="bg-foreground text-background px-2 py-1 rounded hover:bg-background hover:text-foreground duration-200 border border-transparent hover:border-foreground cursor-pointer"
+          className="px-4 py-2 mx-auto bg-blue-600 text-white rounded hover:bg-blue-600/90 cursor-pointer duration-200"
         >
           Submit
         </button>

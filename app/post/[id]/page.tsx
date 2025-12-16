@@ -83,13 +83,13 @@ export default async function Post({
         <p className="text-[2rem]">😕</p>
         <div className="space-y-2">
           <h2 className="text-2xl font-semibold">Post Not Found</h2>
-          <p className="text-gray-500 dark:text-white">
+          <p className="text-gray-500">
             The post you're looking for doesn't exist or has been removed.
           </p>
         </div>
         <Link
           href="/"
-          className="px-4 py-2 bg-blue-600 text-white rounded hover:bg-blue-600/95 transition-colors"
+          className="px-4 py-2 bg-blue-600 text-white rounded hover:bg-blue-600/90 transition-colors cursor-pointer duration-200"
         >
           Back to Home
         </Link>

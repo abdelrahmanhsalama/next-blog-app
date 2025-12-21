@@ -23,9 +23,6 @@ import { parseAllowedColor, parseAllowedFontSize } from "./styleConfig";
 import ExportPlugin from "./ExportPlugin";
 import { forwardRef, useImperativeHandle, useState } from "react";
 import { $generateHtmlFromNodes } from "@lexical/html";
-import YouTubePlugin from "./YouTubePlugin";
-import { $isYouTubeNode, YouTubeNode } from "./YouTubeNode";
-import { DEFAULT_TRANSFORMERS } from "@lexical/react/LexicalMarkdownShortcutPlugin";
 
 const placeholder = "What's on your mind today?";
 
@@ -55,7 +52,6 @@ const exportMap: DOMExportOutputMap = new Map<
 >([
   [ParagraphNode, removeStylesExportDOM],
   [TextNode, removeStylesExportDOM],
-  [YouTubeNode, (editor, node) => node.exportDOM(editor)],
 ]);
 
 const getExtraStyles = (element: HTMLElement): string => {
@@ -129,7 +125,7 @@ const editorConfig = {
     import: constructImportMap(),
   },
   namespace: "React.js Demo",
-  nodes: [ParagraphNode, TextNode, YouTubeNode],
+  nodes: [ParagraphNode, TextNode],
   onError(error: Error) {
     throw error;
   },
@@ -138,7 +134,6 @@ const editorConfig = {
 
 export interface LexicalRef {
   getHTML: () => Promise<string>;
-  clear: () => void;
 }
 
 const Lexical = forwardRef<LexicalRef>((props, ref) => {
@@ -152,12 +147,6 @@ const Lexical = forwardRef<LexicalRef>((props, ref) => {
           const htmlString = $generateHtmlFromNodes(editor);
           resolve(htmlString);
         });
-      });
-    },
-    clear: () => {
-      editor?.update(() => {
-        const root = $getRoot();
-        root.clear();
       });
     },
   }));
@@ -180,7 +169,6 @@ const Lexical = forwardRef<LexicalRef>((props, ref) => {
             ErrorBoundary={LexicalErrorBoundary}
           />
           <HistoryPlugin />
-          <YouTubePlugin />
           <ExportPlugin onEditorReady={setEditor} />
         </div>
       </div>

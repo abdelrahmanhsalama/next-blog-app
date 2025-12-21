@@ -64,17 +64,6 @@ export default async function Post({
           height={1800}
         />
         <p className="whitespace-pre-line">{post.content}</p>
-        {post.youtubeId && (
-          <div className="aspect-video w-full">
-            <iframe
-              className="w-full h-full"
-              src={`https://www.youtube.com/embed/${post.youtubeId}`}
-              title={post.title}
-              allow="accelerometer; clipboard-write; encrypted-media; gyroscope; picture-in-picture; web-share"
-              allowFullScreen
-            />
-          </div>
-        )}
       </article>
     );
   } catch (error) {

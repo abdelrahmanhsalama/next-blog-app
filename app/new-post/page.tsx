@@ -20,13 +20,6 @@ export default function NewPost() {
   const formFields = [
     { label: "Title", name: "title", type: "input", mandatory: true },
     { label: "Image URL", name: "imageUrl", type: "input", mandatory: false },
-    {
-      label: "YouTube Video URL",
-      name: "youtubeUrl",
-      type: "input",
-      mandatory: false,
-    },
-    // { label: "Content", name: "content", type: "textarea", mandatory: true },
   ];
 
   return (

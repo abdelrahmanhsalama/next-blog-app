@@ -13,27 +13,9 @@ import {
   UNDO_COMMAND,
 } from "lexical";
 import { useCallback, useEffect, useRef, useState } from "react";
-import { INSERT_YOUTUBE_COMMAND } from "./YouTubePlugin";
 
 function Divider() {
   return <div className="divider" />;
-}
-
-export function fillURL() {
-  const url = prompt("Enter the URL of the YouTube video:", "");
-
-  if (!url?.trim()) return;
-
-  const match =
-    /^.*(youtu\.be\/|v\/|u\/\w\/|embed\/|watch\?v=|&v=)([^#&?]*).*/.exec(url);
-
-  const id = match ? (match?.[2].length === 11 ? match[2] : null) : null;
-
-  if (id != null) {
-    return id;
-  }
-
-  return null;
 }
 
 export default function ToolbarPlugin() {
@@ -189,16 +171,6 @@ export default function ToolbarPlugin() {
         aria-label="Justify Align"
       >
         <i className="format justify-align" />
-      </button>
-      <Divider />
-      <button
-        onClick={() => {
-          editor.dispatchCommand(INSERT_YOUTUBE_COMMAND, fillURL());
-        }}
-        className="toolbar-item"
-        aria-label="Insert YouTube Video"
-      >
-        <i className="format youtube" />
       </button>
     </div>
   );

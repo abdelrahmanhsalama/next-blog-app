@@ -9,6 +9,9 @@
     "lint": "eslint"
   },
   "dependencies": {
+    "@lexical/html": "^0.39.0",
+    "@lexical/react": "^0.39.0",
+    "lexical": "^0.39.0",
     "lucide-react": "^0.555.0",
     "next": "16.0.5",
     "react": "19.2.0",

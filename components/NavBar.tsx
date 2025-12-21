@@ -18,7 +18,7 @@ const NavBar = () => {
         <Link href="/new-post">
           <button
             type="button"
-            className="px-4 py-2 border border-blue-600 text-blue-600 rounded hover:bg-blue-600 hover:text-white cursor-pointer duration-200"
+            className="px-3 py-1.5 border border-blue-600 text-blue-600 rounded hover:bg-blue-600 hover:text-white cursor-pointer duration-200"
           >
             New Post
           </button>

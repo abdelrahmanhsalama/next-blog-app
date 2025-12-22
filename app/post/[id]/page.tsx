@@ -1,6 +1,7 @@
 import Image from "next/image";
 import Link from "next/link";
 import type { Metadata, ResolvingMetadata } from "next";
+import { Post as PostType } from "@/libs/types";
 
 type Props = {
   params: Promise<{ id: string }>;
@@ -12,7 +13,7 @@ async function getPost(postId: string) {
   if (!response.ok) {
     throw new Error("Post not found");
   }
-  const post = await response.json();
+  const post: PostType = await response.json();
   return post;
 }
 
@@ -50,7 +51,7 @@ export default async function Post({
           <h2 className="text-2xl">{post.title}</h2>
           <p className="text-sm">
             Written by: {post.author || "Unknown"} • Published:{" "}
-            {post.date.split("T")[0]}
+            {post.created_at.split("T")[0]}
           </p>
         </div>
         <Image
@@ -63,7 +64,7 @@ export default async function Post({
           width={2880}
           height={1800}
         />
-        <p className="whitespace-pre-line">{post.content}</p>
+        <div dangerouslySetInnerHTML={{ __html: post.content_html }} />
       </article>
     );
   } catch (error) {

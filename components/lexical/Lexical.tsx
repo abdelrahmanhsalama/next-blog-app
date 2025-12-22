@@ -134,6 +134,8 @@ const editorConfig = {
 
 export interface LexicalRef {
   getHTML: () => Promise<string>;
+  getPlainText: () => Promise<string>;
+  hasContent: () => boolean;
 }
 
 const Lexical = forwardRef<LexicalRef>((props, ref) => {
@@ -148,6 +150,24 @@ const Lexical = forwardRef<LexicalRef>((props, ref) => {
           resolve(htmlString);
         });
       });
+    },
+    getPlainText: async () => {
+      if (!editor) return "";
+      return new Promise((resolve) => {
+        editor.update(() => {
+          const root = $getRoot();
+          resolve(root.getTextContent().trim());
+        });
+      });
+    },
+    hasContent() {
+      if (!editor) return false;
+      let hasContent = false;
+      editor.getEditorState().read(() => {
+        const root = $getRoot();
+        hasContent = root.getTextContent().trim().length > 0;
+      });
+      return hasContent;
     },
   }));
 

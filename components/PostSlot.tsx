@@ -3,6 +3,14 @@ import Image from "next/image";
 import Link from "next/link";
 
 const Post = ({ post }: { post: PostType }) => {
+  const formatDateTime = (isoString: string) => {
+    const date = new Date(isoString);
+    return new Intl.DateTimeFormat("en-US", {
+      dateStyle: "short",
+      timeStyle: "short",
+    }).format(date);
+  };
+
   return (
     <article className="flex gap-8 border border-foreground/10 rounded-lg shadow-lg p-4">
       <div className="flex-3/4 space-y-2">
@@ -14,7 +22,7 @@ const Post = ({ post }: { post: PostType }) => {
           </Link>
           <p className="text-sm">
             Written by: {post.author || "Unknown"} • Published:{" "}
-            {post.date.split("T")[0]}
+            {formatDateTime(post.created_at)}
           </p>
         </div>
         <p className="line-clamp-6">{post.content}</p>

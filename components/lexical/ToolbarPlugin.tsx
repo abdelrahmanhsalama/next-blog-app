@@ -6,7 +6,6 @@ import {
   CAN_REDO_COMMAND,
   CAN_UNDO_COMMAND,
   COMMAND_PRIORITY_LOW,
-  FORMAT_ELEMENT_COMMAND,
   FORMAT_TEXT_COMMAND,
   REDO_COMMAND,
   SELECTION_CHANGE_COMMAND,
@@ -134,43 +133,6 @@ export default function ToolbarPlugin() {
         aria-label="Format Strikethrough"
       >
         <i className="format strikethrough" />
-      </button>
-      <Divider />
-      <button
-        onClick={() => {
-          editor.dispatchCommand(FORMAT_ELEMENT_COMMAND, "left");
-        }}
-        className="toolbar-item spaced"
-        aria-label="Left Align"
-      >
-        <i className="format left-align" />
-      </button>
-      <button
-        onClick={() => {
-          editor.dispatchCommand(FORMAT_ELEMENT_COMMAND, "center");
-        }}
-        className="toolbar-item spaced"
-        aria-label="Center Align"
-      >
-        <i className="format center-align" />
-      </button>
-      <button
-        onClick={() => {
-          editor.dispatchCommand(FORMAT_ELEMENT_COMMAND, "right");
-        }}
-        className="toolbar-item spaced"
-        aria-label="Right Align"
-      >
-        <i className="format right-align" />
-      </button>
-      <button
-        onClick={() => {
-          editor.dispatchCommand(FORMAT_ELEMENT_COMMAND, "justify");
-        }}
-        className="toolbar-item"
-        aria-label="Justify Align"
-      >
-        <i className="format justify-align" />
       </button>
     </div>
   );

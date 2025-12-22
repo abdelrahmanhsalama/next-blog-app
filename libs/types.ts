@@ -3,7 +3,8 @@ export type Post = {
   uuid: string;
   title: string;
   author: string;
-  date: string;
+  created_at: string;
   content: string;
   image: string;
+  content_html: string;
 };
